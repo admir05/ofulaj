@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hmm</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #000000, #1e3c72); /* Crno-plavi gradijent */
+            color: #fff;
+            text-align: center;
+        }
+
+		#clock {
+    font-size: 1.7em;
+    font-weight: bold;
+}
+
+        nav {
+            padding: 10px 0;
+            position: fixed; /* Fixiranje menija na vrhu */
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Prozirno crna pozadina */
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-end; /* Pomeranje stavki menija na desnu stranu */
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s, border-radius 0.3s; /* Glatka promjena pozadine i kutova */
+        }
+
+        nav ul li a:hover {
+            background-color: #00bfff; /* Plava pozadina na hover */
+            border-radius: 10px; /* Glatki kutovi na hover */
+        }
+
+        h1 {
+            margin-top: 80px; /* Pomaknuto dolje (povećana margina) */
+            font-size: 2.5em;
+            text-shadow: 2px 2px 5px #000;
+			background: linear-gradient(to right, #000000, #00bfff); /* Gradijent od crne (levo) do plave (desno) */
+			padding: 10px 0; /* Razmak oko teksta */
+			width: 100%; /* Da pozadina bude od leve do desne strane */
+			text-align: center; /* Poravnanje teksta na sredinu */
+			
+        }
+
+		h2 {
+			background: linear-gradient(to right, #000000, #00bfff); /* Gradijent od crne (levo) do plave (desno) */
+			padding: 10px 0; /* Razmak oko teksta */
+			width: 100%; /* Da pozadina bude od leve do desne strane */
+			text-align: center; /* Poravnanje teksta na sredinu */
+}
+
+		 .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+			overflow: hidden; /* Sakrij sve što izlazi izvan okvira */
+
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 1s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .slide img {
+            width: 90%;
+            height: auto;
+			max-width: 1000px;   /* Maksimalna širina slike */
+    max-height: 600px;    /* Maksimalna visina slike */
+    object-fit: contain;  /* Slika će biti skalirana da stane unutar kontejnera bez izobličenja */
+        }
+		
+        .gallery-section {
+            padding-top: 80px; /* Razmak od menija */
+        }
+
+        .gallery {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px; /* Razmak između naslova i galerije slika */
+            margin-left: 70px;  /* Pomeri galeriju sa leve strane */
+            margin-right: 70px; /* Pomeri galeriju sa desne strane */
+        }
+
+        .gallery img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #00bfff;
+            cursor: pointer;
+        }
+
+        /* Stil za kontakt formu s providnom bijelom pozadinom */
+        .contact-form {
+            background-color: rgba(255, 255, 255, 0.8); /* Providna bijela pozadina */
+            color: #333;
+            padding: 30px;
+            margin: 50px auto;
+            border-radius: 8px;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form label {
+            text-align: left;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .contact-form button {
+            background-color: #00aaff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: #0088cc;
+        }
+
+       footer {
+    background-color: #333; /* Ovde postavi željenu boju pozadine, na primer svetlo plava */
+    margin-top: 20px;
+    padding: 10px;
+    color: #fff; /* Tekst u footeru je beli */
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-left {
+    font-size: 14px;
+}
+
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            position: relative;
+            text-align: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            font-size: 30px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transform: translateY(-50%);
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+		footer {
+    margin-top: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+}
+
+.footer-left {
+    font-size: 14px;
+}
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+		 
+            <li><a href="#">Početna</a></li>
+			<li><a href="#instagram">Instagram</a></li>
+            <li><a href="#bff">BFF</a></li>
+			<li><a href="#putovanja">Putovanja</a></li>
+			
+            <li><a href="#omeni">O meni</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+			<li><div id="clock"></div></li><!-- Povezivanje sa ID-om kontakt forme -->
+        </ul>
+    </nav>
+
+    <h1>Dobro došli, još bolje otišli</h1>
+
+	   <div class="slideshow-container">
+        <div class="slides">
+            <div class="slide">
+                <img src="file:///D:/Glupost/Slide/Slide1.jpg" alt="Slika 1">
+            </div>
+            <div class="slide">
+                <img src="file:///D:/Glupost/Slide/Slide2.jpg" alt="Slika 2">
+            </div>
+            <div class="slide">
+                <img src="file:///D:/Glupost/Slide/Slide3.jpg" alt="Slika 3">
+            </div>
+            <div class="slide">
+                <img src="file:///D:/Glupost/Slide/Slide4.jpg" alt="Slika 4">
+            </div>
+			<div class="slide">
+                <img src="file:///D:/Glupost/Slide/Slide5.jpeg" alt="Slika 5">
+            </div>
+			<div class="slide">
+                <img src="file:///D:/Glupost/Slide/Slide6.jpg" alt="Slika 6">
+            </div>
+        </div>
+    </div>
+
+    <div id="instagram" class="gallery-section"> <!-- Dodan ID za Instagram sekciju -->
+        <h2>Instagram</h2>
+		
+        <div class="gallery">
+            <img src="D:\\Glupost\\Instagram\\Instagram1.jpg" alt="Slika1" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram1.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram2.jpg" alt="Slika2" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram2.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram3.jpg" alt="Slika3" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram3.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram4.jpg" alt="Slika4" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram4.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram5.jpg" alt="Slika5" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram5.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram6.jpg" alt="Slika6" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram6.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram7.jpg" alt="Slika7" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram7.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram8.jpg" alt="Slika8" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram8.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram9.jpg" alt="Slika9" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram9.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram10.jpg" alt="Slika10" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram10.jpg')">
+			<img src="D:\\Glupost\\Instagram\\Instagram11.jpg" alt="Slika11" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram11.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram12.jpg" alt="Slika12" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram12.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram13.jpg" alt="Slika13" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram13.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram14.jpg" alt="Slika14" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram14.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram15.jpg" alt="Slika15" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram15.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram16.jpg" alt="Slika16" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram16.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram17.jpg" alt="Slika17" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram17.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram18.jpg" alt="Slika18" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram18.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram19.jpg" alt="Slika19" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram19.jpg')">
+            <img src="D:\\Glupost\\Instagram\\Instagram20.jpg" alt="Slika20" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram20.jpg')">
+			<img src="D:\\Glupost\\Instagram\\Instagram21.jpg" alt="Slika21" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram21.jpg')">
+			<img src="D:\\Glupost\\Instagram\\Instagram22.jpg" alt="Slika22" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram22.jpg')">
+			<img src="D:\\Glupost\\Instagram\\Instagram23.jpg" alt="Slika23" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram23.jpg')">
+			<img src="D:\\Glupost\\Instagram\\Instagram24.jpg" alt="Slika24" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram24.jpg')">
+			<img src="D:\\Glupost\\Instagram\\Instagram25.jpg" alt="Slika25" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram25.jpg')">
+			<img src="D:\\Glupost\\Instagram\\Instagram26.jpg" alt="Slika26" class="gallery-img" onclick="openModal('D:\\Glupost\\Instagram\\Instagram26.jpg')">
+			
+        </div>
+    </div>
+
+
+	<div id="bff" class="gallery-section"> <!-- Dodan ID za Instagram sekciju -->
+        <h2>BFF</h2>
+        <div class="gallery">
+			<img src="D:\\Glupost\\Bff\\bff1.jpg" alt="Slika1" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff1.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff2.jpg" alt="Slika2" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff2.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff3.jpg" alt="Slika3" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff3.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff4.jpg" alt="Slika4" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff4.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff5.jpg" alt="Slika5" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff5.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff6.jpg" alt="Slika6" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff6.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff7.jpg" alt="Slika7" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff7.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff8.jpg" alt="Slika8" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff8.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff9.jpg" alt="Slika9" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff9.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff10.jpg" alt="Slika10" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff10.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff11.jpg" alt="Slika11" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff11.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff12.jpg" alt="Slika12" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff12.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff13.jpg" alt="Slika13" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff13.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff14.jpg" alt="Slika14" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff14.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff15.jpg" alt="Slika15" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff15.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff16.jpg" alt="Slika16" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff16.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff17.jpg" alt="Slika17" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff17.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff18.jpg" alt="Slika18" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff18.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff19.jpg" alt="Slika19" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff19.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff20.jpg" alt="Slika20" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff20.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff21.jpg" alt="Slika21" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff21.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff22.jpg" alt="Slika22" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff22.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff23.jpg" alt="Slika23" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff23.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff24.jpg" alt="Slika24" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff24.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff25.jpg" alt="Slika25" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff25.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff26.jpg" alt="Slika26" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff26.jpg')"> 
+			<img src="D:\\Glupost\\Bff\\bff27.jpg" alt="Slika27" class="gallery-img" onclick="openModal('D:\\Glupost\\Bff\\bff27.jpg')"> 
+		
+			
+		</div>
+		
+	</div>
+	
+	<div id="putovanja" class="gallery-section"> <!-- Dodan ID za Instagram sekciju -->
+        <h2>Putovanja</h2>
+        <div class="gallery">
+		
+		</div>
+	</div>
+     <!-- Kontakt forma -->
+    <div id="kontakt" class="contact-form"> <!-- Dodan ID za kontakt formu -->
+        <p>Kontaktirajte me</p>
+        <form action="#" method="POST">
+            <label for="name">Ime i prezime:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email adresa:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Poruka:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+
+            <button type="submit">Pošaljite</button>
+        </form>
+    </div>
+
+    <!-- Modal za puni prikaz slike -->
+    <div id="myModal" class="modal" onclick="closeModal()">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <button class="prev" onclick="changeImage(-1)">&#10094;</button> <!-- Prethodna slika -->
+            <img id="modalImage" src="" alt="Full Image">
+            <button class="next" onclick="changeImage(1)">&#10095;</button> <!-- Sledeća slika -->
+        </div>
+    </div>
+
+
+
+    <script>
+        let images = [];
+        let currentImageIndex = 0;
+
+        // Funkcija za otvaranje modala sa slikom
+        function openModal(imageSrc) {
+            currentImageIndex = images.indexOf(imageSrc);
+
+            if (currentImageIndex === -1) {
+                images = [
+                    'D:\\Glupost\\Instagram\\Instagram1.jpg',
+                    'D:\\Glupost\\Instagram\\Instagram2.jpg',
+                    'D:\\Glupost\\Instagram\\Instagram3.jpg',
+                    'D:\\Glupost\\Instagram\\Instagram4.jpg',
+                    'D:\\Glupost\\Instagram\\Instagram5.jpg',
+                    'D:\\Glupost\\Instagram\\Instagram6.jpg',
+                    'D:\\Glupost\\Instagram\\Instagram7.jpg',
+                    'D:\\Glupost\\Instagram\\Instagram8.jpg',
+                    'D:\\Glupost\\Instagram\\Instagram20.jpg',
+                  
+					
+					
+					
+                ];
+                currentImageIndex = images.indexOf(imageSrc);
+            }
+
+            var modal = document.getElementById("myModal");
+            var modalImage = document.getElementById("modalImage");
+            modal.style.display = "flex";  // Prikazivanje modala
+            modalImage.src = imageSrc;    // Postavljanje izvora slike u modal
+        }
+
+        // Funkcija za zatvaranje modala
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";  // Zatvaranje modala
+        }
+
+        // Funkcija za promenu slike
+        function changeImage(direction) {
+            currentImageIndex += direction;
+
+            // Provjera da li je indeks izvan opsega
+            if (currentImageIndex < 0) {
+                currentImageIndex = images.length - 1;  // Ako je indeks manji od 0, postavi na poslednju sliku
+            } else if (currentImageIndex >= images.length) {
+                currentImageIndex = 0;  // Ako je indeks veći od poslednje slike, postavi na prvu sliku
+            }
+
+            // Promeni sliku u modalu
+            var modalImage = document.getElementById("modalImage");
+            modalImage.src = images[currentImageIndex];
+        }
+
+        // Zatvaranje modala kada se klikne bilo gde na pozadini
+        document.getElementById("myModal").onclick = function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        }
+
+        // Zatvaranje modala kada se klikne dugme "×"
+        document.querySelector('.modal-close').onclick = function() {
+            closeModal();
+        }
+
+        // Funkcija za skrolanje slike pomoću tastature
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') {
+                changeImage(1);  // Sledeća slika (desna strelica)
+            } else if (e.key === 'ArrowLeft') {
+                changeImage(-1);  // Prethodna slika (leva strelica)
+            }
+        });
+		
+		 // JavaScript za automatski slideshow
+        let currentIndex = 0;
+        const slides = document.querySelectorAll(".slide");
+        const totalSlides = slides.length;
+
+        function changeSlide() {
+            currentIndex++;
+            if (currentIndex >= totalSlides) {
+                currentIndex = 0; // Vraćamo na prvi slajd kada dođemo do kraja
+            }
+            document.querySelector(".slides").style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        // Automatsko menjanje slajdova svakih 3 sekunde
+        setInterval(changeSlide, 3600);
+		
+	function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const timeString = `${hours}:${minutes}:${seconds}`;
+
+    // Postavi vreme u element sa id-em "clock"
+    document.getElementById('clock').textContent = timeString;
+}
+
+// Pozovi funkciju odmah da prikaže vreme odmah prilikom učitavanja stranice
+updateClock();
+
+// Ažuriraj vreme svake sekunde
+setInterval(updateClock, 1000);
+	
+    </script>
+	
+	<footer>
+    <div class="footer-left">
+        <p><a href="https://www.instagram.com/admir05" target="_blank">Created by JA</a></p>
+    </div>
+	<div class="Table Full">
+    <div class="TableRow">
+        <div class="TableCell Option Middle Refresh AlignCenter">
+            <a href="/radio-stanice/bih/sarajevo/radio-m-plus.html" title="Učitajte ponovo radio stanicu"></a>
+        </div>
+        <div class="TableCell Option Middle Controlers PrevVideo">
+            <a href="/radio-stanice/bih/vrazici/radio-avaz.html" class="Transition TableCell Middle" title="Prethodna stanica">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="TableCell Option PlayVideo">
+            <div class="PlayData">
+                <div id="AudioStreamContainer">
+                    <audio id="PlayStream" controls="" autoplay="true" src="http://team-data.ba:8000/;"></audio>
+                </div>
+                <div id="PlayStreamCont" class="pause">
+                    <span class="TableCell Middle AlignCenter action Transition" id="Load" title=""></span>
+                    <span class="TableCell Middle AlignCenter action Transition" id="Play" title="Pusti radio"></span>
+                    <span class="TableCell Middle AlignCenter action Transition" id="Pause" title="Pauziraj radio"></span>
+                </div>
+            </div>
+        </div>
+        <div class="TableCell Middle Option Controlers NextVideo">
+            <a href="/radio-stanice/bih/velika-kladusa/radio-velkaton.html" class="Transition TableCell Middle" title="Sledeća stanica">
+                <i class="fa fa-forward" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="TableCell Middle Option Controlers Favorite AlignCenter">
+            <div id="ajax_favorite_39315_recom" class="AjaxFavoriteButtonMore_39315">
+                <div class="Pointer Circle Button Transition" onclick="javascript:ajax_add_favorite(39315,'Radio M Plus',false);" alt="Dodaj Radio M Plus u Vaše favorite" title="Dodaj Radio M Plus u Vaše favorite">
+                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    window.onload = function() {
+        var audio = document.getElementById('PlayStream');
+        
+        // Postavi automatsko puštanje i zvuk na 7%
+        audio.volume = 0.03;  // Postavi zvuk na 7%
+        audio.play();         // Automatski pokreni radio
+    };
+</script>
+
+	
+</footer>
+</body>
+</html>
