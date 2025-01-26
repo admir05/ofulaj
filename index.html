@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hmm</title>
@@ -242,6 +243,41 @@
 
 .footer-left {
     font-size: 14px;
+}
+	    /* Osnovni stilovi za desktop */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Medijski upit za uređaje širine do 768px (tablet i manji) */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    /* Povećanje fontova, smanjenje margina ili drugi stilovi za mobilne uređaje */
+    body {
+        font-size: 16px;
+    }
+}
+
+/* Medijski upit za mobilne uređaje (npr. širina do 480px) */
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
 }
     </style>
 </head>
