@@ -100,6 +100,11 @@
     max-height: 600px;    /* Maksimalna visina slike */
     object-fit: contain;  /* Slika će biti skalirana da stane unutar kontejnera bez izobličenja */
         }
+	    .slide video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
 		
         .gallery-section {
             padding-top: 80px; /* Razmak od menija */
@@ -267,6 +272,11 @@
 
 	   <div class="slideshow-container">
         <div class="slides">
+		<video autoplay muted loop>
+                <source src="intro.mp4" type="video/mp4">
+                Vaš preglednik ne podržava video element.
+            </video>
+		
             <div class="slide">
                 <img src="Slide/Slide1.jpg" alt="Slika 1">
             </div>
@@ -471,20 +481,41 @@
         });
 		
 		 // JavaScript za automatski slideshow
-        let currentIndex = 0;
-        const slides = document.querySelectorAll(".slide");
-        const totalSlides = slides.length;
+       let currentIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+    const totalSlides = slides.length;
 
-        function changeSlide() {
-            currentIndex++;
-            if (currentIndex >= totalSlides) {
-                currentIndex = 0; // Vraćamo na prvi slajd kada dođemo do kraja
-            }
-            document.querySelector(".slides").style.transform = `translateX(-${currentIndex * 100}%)`;
+    // Funkcija koja menja slajdove
+    function changeSlide() {
+        // Ako je trenutni slajd video, pomerimo ga samo nakon 5 sekundi
+        const currentSlide = slides[currentIndex];
+        const isVideo = currentSlide.querySelector('video'); // Provera da li je trenutni slajd video
+        
+        // Ako je slajd video, menjaćemo ga nakon 5 sekundi, inače 3 sekunde
+        if (isVideo) {
+            setTimeout(() => {
+                currentIndex++;
+                if (currentIndex >= totalSlides) {
+                    currentIndex = 0; // Vraćamo na prvi slajd kada dođemo do kraja
+                }
+                document.querySelector(".slides").style.transform = `translateX(-${currentIndex * 100}%)`;
+            }, 5000); // Video traje 5 sekundi
+        } else {
+            setTimeout(() => {
+                currentIndex++;
+                if (currentIndex >= totalSlides) {
+                    currentIndex = 0; // Vraćamo na prvi slajd kada dođemo do kraja
+                }
+                document.querySelector(".slides").style.transform = `translateX(-${currentIndex * 100}%)`;
+            }, 3000); // Slika traje 3 sekunde
         }
+    }
 
-        // Automatsko menjanje slajdova svakih 3 sekunde
-        setInterval(changeSlide, 3600);
+    // Početno pokretanje slajdera
+    changeSlide(); // Pozivamo ovu funkciju prvi put
+
+    // Automatsko menjanje slajdova svakih 3 sekunde ili 5 sekundi (zavisi od tipa slajda)
+    setInterval(changeSlide, 3000);
 		
 	function updateClock() {
     const now = new Date();
